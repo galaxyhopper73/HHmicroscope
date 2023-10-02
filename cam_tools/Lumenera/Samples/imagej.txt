@@ -1,0 +1,45 @@
+byte swap big endian to little endian
+
+Assuming what you need is a simple byte swap, try something like
+
+Unsigned 16 bit conversion:
+
+swapped = (num>>8) | (num<<8)
+Unsigned 32-bit conversion:
+
+swapped = ((num>>24)&0xff) | // move byte 3 to byte 0
+                    ((num<<8)&0xff0000) | // move byte 1 to byte 2
+                    ((num>>8)&0xff00) | // move byte 2 to byte 1
+                    ((num<<24)&0xff000000 // byte 0 to byte 3
+This swaps the byte orders from positions 1234 to 4321. If your input was 0xdeadbeef, a 32-bit endian swap might have output of 0xefbeadde.
+
+The code above should be cleaned up with macros or at least constants instead of magic numbers, but hopefully it helps as is
+
+EDIT: as another 
+
+
+//! Byte swap unsigned short
+uint16_t swap_uint16( uint16_t val ) 
+{
+    return (val << 8) | (val >> 8 );
+}
+
+//! Byte swap unsigned short
+int16_t swap_int16( int16_t val ) 
+{
+    return (val << 8) | ((val >> 8) & 0xFF);
+}
+
+//! Byte swap unsigned int
+uint32_t swap_uint32( uint32_t val )
+{
+    val = ((val << 8) & 0xFF00FF00 ) | ((val >> 8) & 0xFF00FF ); 
+    return (val << 16) | (val >> 16);
+}
+
+//! Byte swap int
+int32_t swap_int32( int32_t val )
+{
+    val = ((val << 8) & 0xFF00FF00) | ((val >> 8) & 0xFF00FF ); 
+    return (val << 16) | ((val >> 16) & 0xFFFF);
+}
