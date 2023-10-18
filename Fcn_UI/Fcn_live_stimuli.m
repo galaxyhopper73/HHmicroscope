@@ -1,9 +1,9 @@
 function Fcn_live_stimuli(app)
-% this function is a template containing
+% this function is a template container
 % 1 NI daq channel deploying and rate setting
 % 2 MultiClamp channel selection and mode setting
 % 3 voltage clamp signal generation
-if strcmp(app.channelselectionButtonGroup.SelectedObject.Text, 'ch1')
+if strcmp(app.channelButtonGroup.SelectedObject.Text, 'ch1')
     ch_idx = 1;
     app.deployButton_2.UserData.ch = 1;
     addoutput(app.NI_daq.daq_cam,"Dev1","ao0","Voltage");

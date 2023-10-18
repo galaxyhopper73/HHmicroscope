@@ -35,8 +35,8 @@ if auto_contrast.Value==0
     himage.CData = img_out; % can only be 8 bits image
 else
     % auto contrast
-    lower_lim = mu-1*sigma;
-    upper_lim = mu+1*sigma;
+    lower_lim = mu-2*sigma;
+    upper_lim = mu+2*sigma;
     UIcomp.min_slider.Value = lower_lim;
     UIcomp.max_slider.Value = upper_lim;
     y = linspace(0,y_max,upper_lim-lower_lim+1);
