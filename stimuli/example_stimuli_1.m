@@ -11,8 +11,8 @@
 function output = example_stimuli_1(sampling_rate)
 exposure_t = 20; % ms
 % sampling_rate = 10000; % Hz
-activation_t = 1; % s
-recovery_t = 2; %s
+activation_t = 0.1; % s
+recovery_t = 0.4; %s
 dutycycle_trig = 0.1;
 
 % ao output sinusoidal wave five times with 1 volt increment per session
@@ -29,8 +29,8 @@ blank_out = zeros(recovery_t*sampling_rate*1000,1);
 seed = [seed; blank_out];
 % output.do = [];
 output = [];
-for i = 1:5
-    output = [output; seed*i];
+for i = 1:30
+    output = [output; seed*0.01*i];
 %     output.do = [output.do; trig_line];
 end 
 end
