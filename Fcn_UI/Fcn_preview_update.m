@@ -3,13 +3,18 @@ UIcomp = obj.UserData;
 ax_hist = UIcomp.hHist;
 last_plot = ax_hist.Children;
 delete(last_plot);
+if size(event.Data,1)>1024
+    hist_data = event.Data(513:1024,513:1024); 
+else
+    hist_data = event.Data;
+end
 auto_contrast = UIcomp.auto_cont;
-h_hist = histogram(ax_hist,event.Data,'EdgeColor',"k","FaceColor","#0072BD");
+h_hist = histogram(ax_hist,hist_data,'EdgeColor',"k","FaceColor","#0072BD");
 hold(ax_hist,'on');
 y_max = max(h_hist.Values);
-[x_dim y_dim] = size(event.Data);
+[x_dim y_dim] = size(hist_data);
 img_in = double(event.Data);
-[mu, sigma] = normfit(reshape(event.Data,[x_dim*y_dim 1]));
+[mu, sigma] = normfit(reshape(hist_data,[x_dim*y_dim 1]));
 if ~UIcomp.hold.Value
     UIcomp.min_slider.Limits = [mu-10*sigma mu+10*sigma];
     UIcomp.max_slider.Limits = [mu-10*sigma mu+10*sigma];
@@ -20,8 +25,8 @@ if auto_contrast.Value==0
     upper_lim = UIcomp.max_slider.Value;
 else
     % auto contrast
-    lower_lim = mu-2*sigma;
-    upper_lim = mu+2*sigma;
+    lower_lim = mu-10*sigma; %2
+    upper_lim = mu+5*sigma; %2 
     UIcomp.min_slider.Value = lower_lim;
     UIcomp.max_slider.Value = upper_lim;
 end

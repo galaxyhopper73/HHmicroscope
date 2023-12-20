@@ -4,7 +4,7 @@ function Fcn_live_stimuli(app)
 % 1 NI daq channel deploying and rate setting
 % 2 MultiClamp channel selection and mode setting
 % 3 voltage clamp signal generation
-if strcmp(app.modeButtonGroup.SelectedObject.Text,'VC') %CC clamp
+if strcmp(app.modeButtonGroup.SelectedObject.Text,'voltage') %CC clamp
     if strcmp(app.scenarioButtonGroup.SelectedObject.Text,'bath')
         rest_po = 0;
         act_po = 2;
@@ -24,12 +24,6 @@ if strcmp(app.modeButtonGroup.SelectedObject.Text,'VC') %CC clamp
     end
     app.queued_seq_live = output'/cmd_sen;
 else
-    if strcmp(app.channelButtonGroup.SelectedObject.Text, 'ch1')
-        cmd_sen = app.multi_clamp_para.ch1.CC_cmd;
-    else
-        cmd_sen = app.multi_clamp_para.ch2.CC_cmd;
-    end
-    output = ones(1,150)*app.curentpASlider.Value;
-    app.queued_seq_live = output'/cmd_sen;
+
 end
 end

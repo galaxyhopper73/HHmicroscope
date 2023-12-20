@@ -30,14 +30,14 @@ switch mode_sele
         if size(app.queued_sequence,2)>2  % two channels deployed
             AO0 = app.queued_sequence(:,1);
             AO1 = app.queued_sequence(:,2);
-            app.DAQ_vis_graph.ch1 = DAQ_vis(app, AO0,1);
-            app.DAQ_vis_graph.ch2 = DAQ_vis(app, AO1,2);
+            app.DAQ_vis_graph.ch1 = DAQ_vis(app, AO0,1,app.multi_clamp_para.ch1.clamp_mode);
+            app.DAQ_vis_graph.ch2 = DAQ_vis(app, AO1,2,app.multi_clamp_para.ch2.clamp_mode);
         else % single channel deployed
             AO = app.queued_sequence(:,1);
-            if app.deployButton_2.UserData.ch == 1  % channel 1
-                app.DAQ_vis_graph.ch1 = DAQ_vis(app, AO,1);
+            if strcmp(app.deployButton_2.UserData.ch,'ch1')  % channel 1
+                app.DAQ_vis_graph.ch1 = DAQ_vis(app, AO,1,app.multi_clamp_para.ch1.clamp_mode);
             else  % channel 2
-                app.DAQ_vis_graph.ch2 = DAQ_vis(app, AO,2);
+                app.DAQ_vis_graph.ch2 = DAQ_vis(app, AO,2,app.multi_clamp_para.ch2.clamp_mode);
             end
         end
 end
